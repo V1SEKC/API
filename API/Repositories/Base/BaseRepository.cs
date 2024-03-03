@@ -17,7 +17,7 @@ namespace ConsoleApp1.Repositories.Base
 			_context = context;
 		}
 
-		public EntityEntry<TModel> Add(TModel model)
+		public EntityEntry<TModel> Create(TModel model)
 		{
 			return _context.Set<TModel>().Add(model);
 		}

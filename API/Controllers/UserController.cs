@@ -23,6 +23,5 @@ namespace API.Controllers
 			_userRepository.Get().ForEach(user => dtos.Add(new UserDto(user.Monny, user.Name, user.Hors)));
 			return Ok(dtos);
 		}
-
 	}
 }

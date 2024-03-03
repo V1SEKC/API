@@ -20,7 +20,7 @@ namespace ConsoleApp1.Repositories.Base
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		EntityEntry<TModel> Add(TModel model);
+		EntityEntry<TModel> Create(TModel model);
 
 		/// <summary>
 		/// Обновление существующей записи в бд
