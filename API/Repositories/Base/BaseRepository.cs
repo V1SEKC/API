@@ -37,9 +37,10 @@ namespace ConsoleApp1.Repositories.Base
 			_context.SaveChanges();
 		}
 
-		public EntityEntry<TModel> Update(TModel model)
+		public void Update(TModel model)
 		{
-			return _context.Set<TModel>().Update(model);
+			_context.Set<TModel>().Update(model);
+			_context.SaveChanges();
 		}
 
 		public TModel GetById(int id)

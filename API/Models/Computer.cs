@@ -7,6 +7,6 @@ namespace API.Models
 		public bool IsFree { get; set; }
 		public int PricePerHour { get; set; }
 		public string Number {  get; set; }
-
+		public List<Apontment> Apontments { get; set; } = new List<Apontment>();
 	}
 }

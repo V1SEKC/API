@@ -1,9 +1,7 @@
 ﻿using API.Data;
 using ConsoleApp1.Repositories.Base;
-using ConsoleApp1.Repositories;
-using Microsoft.EntityFrameworkCore;
 using API.Models;
-using API.Repositories.ConsoleApp1.Repositories;
+using API.Exceptions;
 
 namespace API.Repositories.Implementations
 {
@@ -18,7 +16,7 @@ namespace API.Repositories.Implementations
 
 			public User GetByName(string name)
 			{
-				return _context.User.FirstOrDefault(user => user.Name == name);
+				return _context.User.FirstOrDefault(user => user.Name == name) ?? throw new NotFoundException($"Пользователь {name} не найден");
 			}
 		}
 }

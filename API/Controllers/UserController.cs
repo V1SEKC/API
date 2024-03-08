@@ -1,7 +1,6 @@
 ﻿using API.Dto;
-using API.Repositories.ConsoleApp1.Repositories;
-using API.Repositories.Implementations;
-using ConsoleApp1.Repositories;
+using API.Models;
+using API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,7 +17,7 @@ namespace API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<List<UserDto>>> GetUser()
+		public async Task<ActionResult<List<UserDto>>> GetUsers()
 		{
 			List<UserDto> dtos = new List<UserDto>();
 			_userRepository.Get().ForEach(user => dtos.Add(new UserDto(user.Monny, user.Name, user.Hors)));
@@ -26,13 +25,17 @@ namespace API.Controllers
 		}
 
 		[HttpPut]
-		public async Task<ActionResult<UserDto>> PutName([FromBody] DepositDto dto)
+		public async Task<ActionResult<UserDto>> Despoit([FromBody] DepositDto dto)
 		{
-			User user = _userRepository.GetByName(Dto.UserName);
-            User.Monny Monn += Dto.Monny;
-			Monn = User.Monny;
-			UserDto Monny = new UserDto(user.Monny, user.Name, user.Hors);
-			return Ok(dto);
+			if (dto.Money <= 0)
+			{
+				// TO DO выполнить обработку случая
+			}
+			User user = _userRepository.GetByName(dto.UserName);
+            user.Monny += dto.Money;
+			_userRepository.Update(user);
+			UserDto userDto = new UserDto(user.Monny, user.Name, user.Hors);
+			return Ok(userDto);
 		}
 	}
 }

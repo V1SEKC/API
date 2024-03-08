@@ -1,10 +1,10 @@
-
 using API.Data;
+using API.Handler;
+using API.Repositories;
+using API.Repositories.Implementations;
 using ConsoleApp1.Repositories;
 using ConsoleApp1.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Options;
 
 namespace API
 {
@@ -19,8 +19,13 @@ namespace API
 			builder.Services.AddDbContext<AppDbContext>(
 				options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-			builder.Services.AddScoped<IComputerRepository, ComputerRepository>();  //Инстанс обекта
+			builder.Services.AddScoped<IComputerRepository, ComputerRepository>();
+			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddControllers();
+
+			//Регистрируем хендлеры
+			builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+			
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
@@ -40,7 +45,7 @@ namespace API
 
 
 			app.MapControllers();
-
+			app.UseExceptionHandler("/error");
 			app.Run();
 		}
 	}

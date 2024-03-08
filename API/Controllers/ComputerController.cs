@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using API.Data;
-using API.Dto;
-using API.Models;
+﻿using API.Dto;
 using ConsoleApp1.Repositories;
-using ConsoleApp1.Repositories.Implementations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {

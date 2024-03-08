@@ -31,7 +31,7 @@ namespace ConsoleApp1.Repositories.Base
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		EntityEntry<TModel> Update(TModel model);
+		void Update(TModel model);
 
 		/// <summary>
 		/// удаление записи из бд
