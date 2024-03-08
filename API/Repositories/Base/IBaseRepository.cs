@@ -15,6 +15,10 @@ namespace ConsoleApp1.Repositories.Base
 		/// <returns></returns>
 		List<TModel> Get();
 
+
+		TModel GetById(int id);
+
+
 		/// <summary>
 		/// Добавление записи в бд
 		/// </summary>

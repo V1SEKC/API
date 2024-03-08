@@ -8,7 +8,7 @@
 
 		public UserDto(int monny, string name, int hors)
 		{
-			Monny = monny;
+			this.Monny = monny;
 			Name = name;
 			Hors = hors;
 		}

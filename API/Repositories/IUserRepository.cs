@@ -15,7 +15,10 @@ namespace API.Repositories
 			/// </summary>
 			/// <param name="name"></param>
 			/// <returns></returns>
-			User GetByName(string Name);
+			User GetByName(string Name)
+			{ 
+				
+			}
 		}
 	}
 }

@@ -41,5 +41,10 @@ namespace ConsoleApp1.Repositories.Base
 		{
 			return _context.Set<TModel>().Update(model);
 		}
+
+		public TModel GetById(int id)
+		{
+			return _context.Set<TModel>().Find(id);
+		}
 	}
 }
