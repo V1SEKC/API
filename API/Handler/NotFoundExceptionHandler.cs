@@ -8,7 +8,7 @@ namespace API.Handler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            if (exception is not NotFoundException notFoundException)
+            if (exception is not BadRequestException notFoundException)
             {
                 return false;
             }

@@ -25,7 +25,8 @@ namespace API
 
 			//Регистрируем хендлеры
 			builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
-			
+			builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();

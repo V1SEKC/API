@@ -1,4 +1,5 @@
 ﻿using API.Dto;
+using API.Exceptions;
 using API.Models;
 using API.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -39,13 +40,21 @@ namespace API.Controllers
             var apontment = _apontmentRepository.GetByHors(apontmentHors);
             if (apontment == null)
             {
-                return NotFound();
-            }
+				throw new BadRequestException($"Поле не соответствует ожидаению");
+			}
             _apontmentRepository.Remove(apontment);
             _apontmentRepository.SaveChanges();
             return NoContent();
         }
-    }
+
+		public Apontment Hors(int hors)
+		{
+			if(int.IsPow2(hors))
+					throw new BadRequestException($"Поле {hors} не соответствует ожидаению");
+			return (hors);
+		}
+
+	}
 }
 
 //Добавить связь между заявкой и пользователем с пк

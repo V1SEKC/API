@@ -1,4 +1,6 @@
 ﻿using API.Dto;
+using API.Exceptions;
+using API.Models;
 using ConsoleApp1.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +23,13 @@ namespace API.Controllers
 			List<ComputerDto> dtos = new List<ComputerDto>();
 			_computerRepository.Get().ForEach(computer => dtos.Add(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)));
 			return Ok(dtos);
+		}
+
+		public Computer Number(string number)
+		{
+			if (string.IsNullOrWhiteSpace(number))
+				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
+			return (number);
 		}
 
 	}
