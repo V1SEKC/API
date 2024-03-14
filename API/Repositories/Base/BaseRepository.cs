@@ -1,5 +1,7 @@
 ﻿using API.Data;
+using API.Exceptions;
 using API.Models.Base;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ConsoleApp1.Repositories.Base
@@ -27,25 +29,25 @@ namespace ConsoleApp1.Repositories.Base
 			_context.Set<TModel>().Remove(model);
 		}
 
-		public List<TModel> Get()
+		public async Task<List<TModel>> GetAsync()
 		{
-			return _context.Set<TModel>().ToList();
+			return await _context.Set<TModel>().ToListAsync();
 		}
 
-		public void SaveChanges()
+		public async void SaveChanges()
 		{
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 
-		public void Update(TModel model)
+		public async void UpdateAsync(TModel model)
 		{
 			_context.Set<TModel>().Update(model);
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 
-		public TModel GetById(int id)
+		public async Task<TModel> GetByIdAsync(int id)
 		{
-			return _context.Set<TModel>().Find(id);
+			return await _context.Set<TModel>().FindAsync(id) ?? throw new NotFoundException($"Элемент с id {id} не найден");
 		}
 	}
 }

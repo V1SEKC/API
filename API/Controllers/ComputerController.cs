@@ -21,15 +21,21 @@ namespace API.Controllers
 		public async Task<ActionResult<List<ComputerDto>>> GetComputers()
 		{
 			List<ComputerDto> dtos = new List<ComputerDto>();
-			_computerRepository.Get().ForEach(computer => dtos.Add(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)));
+			List<Computer> computers = await _computerRepository.GetAsync();
+			computers.ForEach(computer => dtos.Add(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)));
 			return Ok(dtos);
 		}
 
-		public Computer Number(string number)
+		[HttpGet]
+		public async Task<ActionResult<ComputerDto>> GetComputerByNumber([FromQuery] string number)
 		{
 			if (string.IsNullOrWhiteSpace(number))
+			{
 				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
-			return (number);
+			}
+			Computer computer = _computerRepository.GetByNumber(number);
+
+			return Ok(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)); 
 		}
 
 	}

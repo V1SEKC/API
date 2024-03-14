@@ -8,7 +8,7 @@ namespace API.Handler
 	{
 		private readonly ILogger<BadRequestExceptionHandler> _logger;
 
-		public GlobalExceptionHandler(ILogger<BadRequestExceptionHandler> logger)
+		public BadRequestExceptionHandler(ILogger<BadRequestExceptionHandler> logger)
 		{
 			_logger = logger;
 		}

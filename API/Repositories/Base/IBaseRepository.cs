@@ -13,10 +13,10 @@ namespace ConsoleApp1.Repositories.Base
 		/// Получение всех записей из бд
 		/// </summary>
 		/// <returns></returns>
-		List<TModel> Get();
+		Task<List<TModel>> GetAsync();
 
 
-		TModel GetById(int id);
+		Task<TModel> GetByIdAsync(int id);
 
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace ConsoleApp1.Repositories.Base
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		void Update(TModel model);
+		void UpdateAsync(TModel model);
 
 		/// <summary>
 		/// удаление записи из бд

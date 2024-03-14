@@ -21,7 +21,8 @@ namespace API.Controllers
 		public async Task<ActionResult<List<ApontmentDto>>> GetApontment()
 		{
 			List<ApontmentDto> dtos = new List<ApontmentDto>();
-			_apontmentRepository.Get().ForEach(apontment => dtos.Add(new ApontmentDto(apontment.Hors, apontment.Beginning, apontment.Ending)));
+			List<Apontment> apontments = await _apontmentRepository.GetAsync();
+			apontments.ForEach(apontment => dtos.Add(new ApontmentDto(apontment.Hors, apontment.Beginning, apontment.Ending)));
 			return Ok(dtos);
 		}
 
@@ -37,8 +38,10 @@ namespace API.Controllers
         [HttpDelete("{ApontmentHors}")]
         public async Task<ActionResult> DeleteApontment([FromRoute] int apontmentHors)
         {
+            //Добавить проверку для apontmentHors
             var apontment = _apontmentRepository.GetByHors(apontmentHors);
-            if (apontment == null)
+            //Убрать
+			if (apontment == null)
             {
 				throw new BadRequestException($"Поле не соответствует ожидаению");
 			}

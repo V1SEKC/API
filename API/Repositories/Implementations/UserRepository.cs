@@ -16,7 +16,8 @@ namespace API.Repositories.Implementations
 
 			public User GetByName(string name)
 			{
-				return _context.User.FirstOrDefault(user => user.Name == name) ?? throw new NotFoundException($"Пользователь {name} не найден");
+				return _context.User.FirstOrDefault(user => user.Name == name) 
+				?? throw new NotFoundException($"Пользователь {name} не найден");
 			}
 		}
 }
