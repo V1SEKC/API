@@ -50,6 +50,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+		//TODO убрать
 		public Apontment Hors(int hors)
 		{
 			if(int.IsPow2(hors))
