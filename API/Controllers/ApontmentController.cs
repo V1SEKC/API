@@ -2,6 +2,7 @@
 using API.Exceptions;
 using API.Models;
 using API.Repositories;
+using API.Repositories.Implementations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -50,14 +51,17 @@ namespace API.Controllers
             return NoContent();
         }
 
-		//TODO убрать
-		public Apontment Hors(int hors)
+		public async Task<ActionResult<ApontmentDto>> Apontmen([FromBody] ApontmentDto dto)
 		{
-			if(int.IsPow2(hors))
-					throw new BadRequestException($"Поле {hors} не соответствует ожидаению");
-			return (hors);
+			if (dto.Hors > 0) // || int.IsNullOrWhiteSpace(dto.Hors))
+			{
+				Apontment apontment = _apontmentRepository.GetByHors(dto.Hors);
+				_apontmentRepository.UpdateAsync(apontment);
+				ApontmentDto apontmentDto = new ApontmentDto(apontment.Hors, apontment.Beginning, apontment.Ending);
+				return Ok(apontmentDto);
+			}
+			throw new BadRequestException($"Поле Hors не соответствует ожидаению");
 		}
-
 	}
 }
 
