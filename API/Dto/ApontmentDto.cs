@@ -7,6 +7,8 @@ namespace API.Dto
 		public int Hors { get; set; }
 		public DateTime Beginning { get; set; }
 		public DateTime Ending { get; set; }
+        public int ComputerId { get; set; }
+        public int UserId { get; set; }
 
         public ApontmentDto(int hors, DateTime beginning, DateTime ending)
         {

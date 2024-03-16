@@ -7,6 +7,7 @@ using API.Services.Implementations;
 using ConsoleApp1.Repositories;
 using ConsoleApp1.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace API
 {
@@ -20,9 +21,12 @@ namespace API
 			builder.Services.AddDbContext<AppDbContext>(
 				options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 			builder.Services.AddScoped<IComputerRepository, ComputerRepository>();
 			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddScoped<IUserService, UserServiceImpl>();
+			builder.Services.AddScoped<IApontmentRepository, ApontmentRepository>();
 			builder.Services.AddControllers();
 
 			//Регистрируем хендлеры

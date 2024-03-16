@@ -35,7 +35,7 @@ namespace API.Controllers
 			}
 			User user = _userRepository.GetByName(dto.UserName);
             user.Monny += dto.Money;
-			_userRepository.UpdateAsync(user);
+			await _userRepository.UpdateAsync(user);
 			UserDto userDto = new UserDto(user.Monny, user.Name, user.Hors);
 			return Ok(userDto);
 		}

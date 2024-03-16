@@ -2,7 +2,7 @@
 using API.Exceptions;
 using API.Models;
 using API.Repositories;
-using API.Repositories.Implementations;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,10 +12,12 @@ namespace API.Controllers
 	public class ApontmentController : ControllerBase
 	{
 		private readonly IApontmentRepository _apontmentRepository;
-
-		public ApontmentController(IApontmentRepository apontmentRepository)
+		private readonly IMapper _mapper;
+		
+		public ApontmentController(IApontmentRepository apontmentRepository, IMapper mapper)
 		{
 			_apontmentRepository = apontmentRepository;
+			_mapper = mapper;
 		}
 
 		[HttpGet]
@@ -23,17 +25,17 @@ namespace API.Controllers
 		{
 			List<ApontmentDto> dtos = new List<ApontmentDto>();
 			List<Apontment> apontments = await _apontmentRepository.GetAsync();
-			apontments.ForEach(apontment => dtos.Add(new ApontmentDto(apontment.Hors, apontment.Beginning, apontment.Ending)));
+			apontments.ForEach(apontment => dtos.Add(_mapper.Map<ApontmentDto>(apontment)));
 			return Ok(dtos);
 		}
 
         [HttpPost]
         public async Task<ActionResult<ApontmentDto>> CreateApontment([FromBody] ApontmentDto dto)
         {
-            Apontment apontment = new Apontment(dto);
-            _apontmentRepository.Create(apontment);
-            _apontmentRepository.SaveChanges();
-            return Ok(apontment);
+			Apontment apontment = _mapper.Map<Apontment>(dto);
+			_apontmentRepository.Create(apontment);
+            await _apontmentRepository.SaveChangesAsync();
+            return Ok(dto);
         }
 
         [HttpDelete("{ApontmentHors}")]
@@ -47,21 +49,9 @@ namespace API.Controllers
 				throw new BadRequestException($"Поле не соответствует ожидаению");
 			}
             _apontmentRepository.Remove(apontment);
-            _apontmentRepository.SaveChanges();
+            await _apontmentRepository.SaveChangesAsync();
             return NoContent();
         }
-
-		public async Task<ActionResult<ApontmentDto>> Apontmen([FromBody] ApontmentDto dto)
-		{
-			if (dto.Hors > 0) // || int.IsNullOrWhiteSpace(dto.Hors))
-			{
-				Apontment apontment = _apontmentRepository.GetByHors(dto.Hors);
-				_apontmentRepository.UpdateAsync(apontment);
-				ApontmentDto apontmentDto = new ApontmentDto(apontment.Hors, apontment.Beginning, apontment.Ending);
-				return Ok(apontmentDto);
-			}
-			throw new BadRequestException($"Поле Hors не соответствует ожидаению");
-		}
 	}
 }
 

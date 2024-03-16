@@ -34,12 +34,12 @@ namespace ConsoleApp1.Repositories.Base
 			return await _context.Set<TModel>().ToListAsync();
 		}
 
-		public async void SaveChanges()
+		public async Task SaveChangesAsync()
 		{
 			await _context.SaveChangesAsync();
 		}
 
-		public async void UpdateAsync(TModel model)
+		public async Task UpdateAsync(TModel model)
 		{
 			_context.Set<TModel>().Update(model);
 			await _context.SaveChangesAsync();

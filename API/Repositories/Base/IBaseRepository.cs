@@ -31,7 +31,7 @@ namespace ConsoleApp1.Repositories.Base
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		void UpdateAsync(TModel model);
+		Task UpdateAsync(TModel model);
 
 		/// <summary>
 		/// удаление записи из бд
@@ -42,6 +42,6 @@ namespace ConsoleApp1.Repositories.Base
 		/// <summary>
 		/// Сохраниение изменений в бд
 		/// </summary>
-		void SaveChanges();
+		Task SaveChangesAsync();
 	}
 }

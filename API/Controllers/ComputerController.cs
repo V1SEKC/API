@@ -12,12 +12,12 @@ namespace API.Controllers
 	{
 		private readonly IComputerRepository _computerRepository;
 
-        public ComputerController(IComputerRepository computerRepository)
-        {
+		public ComputerController(IComputerRepository computerRepository)
+		{
 			_computerRepository = computerRepository;
 		}
 
-        [HttpGet]
+		[HttpGet]
 		public async Task<ActionResult<List<ComputerDto>>> GetComputers()
 		{
 			List<ComputerDto> dtos = new List<ComputerDto>();
@@ -26,8 +26,8 @@ namespace API.Controllers
 			return Ok(dtos);
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<ComputerDto>> GetComputerByNumber([FromQuery] string number)
+		[HttpGet("{number}")]
+		public async Task<ActionResult<ComputerDto>> GetComputerByNumber([FromRoute] string number)
 		{
 			if (string.IsNullOrWhiteSpace(number))
 			{
