@@ -29,15 +29,7 @@ namespace API.Controllers
 		[HttpPut]
 		public async Task<ActionResult<UserDto>> Despoit([FromBody] DepositDto dto)
 		{
-			if (dto.Money <= 0 || string.IsNullOrWhiteSpace(dto.UserName))
-			{
-				throw new BadRequestException($"Поле Money или UserName не соответствует ожидаению");
-			}
-			User user = _userRepository.GetByName(dto.UserName);
-            user.Monny += dto.Money;
-			_userRepository.UpdateAsync(user);
-			UserDto userDto = new UserDto(user.Monny, user.Name, user.Hors);
-			return Ok(userDto);
+			return Ok(await _userService.GetUsersAsync());
 		}
 	}
 }
