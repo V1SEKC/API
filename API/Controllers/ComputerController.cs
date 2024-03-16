@@ -1,6 +1,7 @@
 ﻿using API.Dto;
 using API.Exceptions;
 using API.Models;
+using API.Services;
 using ConsoleApp1.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,31 +12,24 @@ namespace API.Controllers
 	public class ComputerController : ControllerBase
 	{
 		private readonly IComputerRepository _computerRepository;
+		private readonly IComputerServise _computerServise;
 
-		public ComputerController(IComputerRepository computerRepository)
-		{
+        public ComputerController(IComputerRepository computerRepository)
+        {
 			_computerRepository = computerRepository;
+			_computerServise = computerServise;
 		}
 
 		[HttpGet]
 		public async Task<ActionResult<List<ComputerDto>>> GetComputers()
 		{
-			List<ComputerDto> dtos = new List<ComputerDto>();
-			List<Computer> computers = await _computerRepository.GetAsync();
-			computers.ForEach(computer => dtos.Add(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)));
-			return Ok(dtos);
+			return Ok(await _computerServise.GetComputersAsync());
 		}
 
 		[HttpGet("{number}")]
 		public async Task<ActionResult<ComputerDto>> GetComputerByNumber([FromRoute] string number)
 		{
-			if (string.IsNullOrWhiteSpace(number))
-			{
-				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
-			}
-			Computer computer = _computerRepository.GetByNumber(number);
-
-			return Ok(new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number)); 
+			return Ok(await _computerServise.GetComputerByNumberAsync());
 		}
 
 	}
