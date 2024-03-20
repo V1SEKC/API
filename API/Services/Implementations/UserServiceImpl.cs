@@ -36,10 +36,10 @@ namespace API.Services.Implementations
 		}
 
 		//Переименовать и изменить возвращаемый тип данных на UserDto
-		public async Task<User> Id(int id)
+		public async Task<UserDto> GetUserByIdAsync(int id)
 		{
 			_userValidator.ValidateId(id);
-			return await _userRepository.GetByIdAsync(id);
+			return _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(id));
 		}
 	}
 }

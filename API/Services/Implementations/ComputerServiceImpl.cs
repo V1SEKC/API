@@ -1,6 +1,7 @@
 ﻿using API.Dto;
 using API.Exceptions;
 using API.Models;
+using API.Validators;
 using AutoMapper;
 using ConsoleApp1.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,15 @@ namespace API.Services.Implementations
 	//Сделать валидатор
 	public class ComputerServiceImpl : IComputerServise
 	{
+		private readonly IComputerValidator _computerValidator;
 		private readonly IComputerRepository _computerRepository;
 		private readonly IMapper _mapper;
 
-		public ComputerServiceImpl(IComputerRepository computerRepository, IMapper mapper)
+		public ComputerServiceImpl(IComputerRepository computerRepository, IMapper mapper, IComputerValidator computerValidator)
 		{
 			_computerRepository = computerRepository;
 			_mapper = mapper;
+			_computerValidator = computerValidator;
 		}
 
 		public async Task<List<ComputerDto>> GetComputersAsync()
@@ -30,16 +33,14 @@ namespace API.Services.Implementations
 		public async Task<ComputerDto> GetComputerByNumberAsync([FromQuery] string number)
 		{
 			//Вынести в валидатор
-			if (string.IsNullOrWhiteSpace(number))
-			{
-				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
-			}
+			_computerValidator.ValidatorGetComputerByNumber(number);
 			return _mapper.Map<ComputerDto>(_computerRepository.GetByNumber(number));
 		}
 
 		public async Task<ComputerDto> GetComputerByIdAsync(int id)
 		{
 			//Провалидировать Id
+			_computerValidator.ValidateId(id);
 			return _mapper.Map<ComputerDto>(await _computerRepository.GetByIdAsync(id));
 		}
 	}
