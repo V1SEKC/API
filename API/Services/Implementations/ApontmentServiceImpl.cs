@@ -45,8 +45,8 @@ namespace API.Services.Implementations
 			{
 				throw new NotFoundException($"Поле Money или UserName не соответствует ожидаению");
 			}
-			User user = _userRepository.GetByIdAsync(dto.UserId);
-			Computer computer = _computerRepository.GetByIdAsync(id);
+			User user = await _userRepository.GetByIdAsync(dto.UserId);
+			Computer computer = await _computerRepository.GetByIdAsync(dto.ComputerId);
 			int price = computer.PricePerHour * dto.Hors;
 			//вынести в валидатор
 			if (price > user.Monny)
