@@ -6,5 +6,7 @@ namespace API.Services
 	{
 		Task<List<ComputerDto>> GetComputersAsync();
 		Task<ComputerDto> GetComputerByNumberAsync(string number);
-	}
+		Task<ComputerDto> GetComputerByIdAsync(int id);
+
+    }
 }

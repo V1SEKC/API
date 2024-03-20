@@ -1,12 +1,8 @@
-﻿using API.Data;
-using API.Dto;
-using API.Exceptions;
+﻿using API.Dto;
 using API.Models;
-using API.Models.Base;
 using API.Repositories;
+using API.Validators;
 using AutoMapper;
-using ConsoleApp1.Repositories.Base;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services.Implementations
 {
@@ -14,13 +10,13 @@ namespace API.Services.Implementations
 	{
         private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
+		private readonly IUserValidator _userValidator;
 
 		public UserServiceImpl(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
 			_mapper = mapper;
         }
-
 
 		public async Task<List<UserDto>> GetUsersAsync()
         {
@@ -32,19 +28,17 @@ namespace API.Services.Implementations
 
 		public async Task<UserDto> DespoitAsync(DepositDto dto)
 		{
-			if (dto.Money <= 0 || string.IsNullOrWhiteSpace(dto.UserName))
-			{
-				throw new BadRequestException($"Поле Money или UserName не соответствует ожидаению");
-			}
+			_userValidator.ValidateDeposit(dto);
 			User user = _userRepository.GetByName(dto.UserName);
 			user.Monny += dto.Money;
 			await _userRepository.UpdateAsync(user);
-			UserDto userDto = new UserDto(_mapper.Map<UserDto>);
-			return userDto;
+			return _mapper.Map<UserDto>(user);
 		}
 
+		//Переименовать и изменить возвращаемый тип данных на UserDto
 		public async Task<User> Id(int id)
 		{
+			_userValidator.ValidateId(id);
 			return await _userRepository.GetByIdAsync(id);
 		}
 	}

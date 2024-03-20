@@ -1,10 +1,5 @@
 ﻿using API.Dto;
-using API.Exceptions;
-using API.Models;
-using API.Repositories;
-using API.Repositories.Implementations;
 using API.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -35,7 +30,8 @@ namespace API.Controllers
         [HttpDelete("{ApontmentHors}")]
         public async Task<ActionResult> DeleteApontment([FromRoute] int apontmentHors)
         {
-			return Ok(await _apontmentService.DeleteApontmentAsync());
+			await _apontmentService.DeleteApontmentAsync(apontmentHors);
+            return Ok();
 		}
 	}
 }

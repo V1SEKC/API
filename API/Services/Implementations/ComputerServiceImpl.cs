@@ -1,13 +1,13 @@
 ﻿using API.Dto;
 using API.Exceptions;
 using API.Models;
-using API.Repositories;
 using AutoMapper;
 using ConsoleApp1.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services.Implementations
 {
+	//Сделать валидатор
 	public class ComputerServiceImpl : IComputerServise
 	{
 		private readonly IComputerRepository _computerRepository;
@@ -29,17 +29,18 @@ namespace API.Services.Implementations
 
 		public async Task<ComputerDto> GetComputerByNumberAsync([FromQuery] string number)
 		{
+			//Вынести в валидатор
 			if (string.IsNullOrWhiteSpace(number))
 			{
 				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
 			}
-		    Computer computer = _computerRepository.GetByNumber(number);
-
-			return (new ComputerDto(computer.IsFree, computer.PricePerHour, computer.Number));
+			return _mapper.Map<ComputerDto>(_computerRepository.GetByNumber(number));
 		}
 
-		public async Task<Computer> Id(int id)
+		public async Task<ComputerDto> GetComputerByIdAsync(int id)
 		{
-			return await _computerRepository.GetByIdAsync(id);		}
+			//Провалидировать Id
+			return _mapper.Map<ComputerDto>(await _computerRepository.GetByIdAsync(id));
+		}
 	}
 }

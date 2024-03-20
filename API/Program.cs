@@ -4,6 +4,8 @@ using API.Repositories;
 using API.Repositories.Implementations;
 using API.Services;
 using API.Services.Implementations;
+using API.Validators;
+using API.Validators.Implementation;
 using ConsoleApp1.Repositories;
 using ConsoleApp1.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,7 @@ namespace API
 			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddScoped<IUserService, UserServiceImpl>();
 			builder.Services.AddScoped<IApontmentRepository, ApontmentRepository>();
+			builder.Services.AddScoped<IUserValidator, UserValidatorImpl>();
 			builder.Services.AddControllers();
 
 			//Регистрируем хендлеры
