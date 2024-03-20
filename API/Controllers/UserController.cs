@@ -11,12 +11,10 @@ namespace API.Controllers
 	[ApiController]
 	public class UserController : ControllerBase
 	{
-		private readonly IUserRepository _userRepository;
 		private readonly IUserService _userService;
 
-		public UserController(IUserRepository userRepository, IUserService userService)
+		public UserController(IUserService userService)
 		{
-			_userRepository = userRepository;
 			_userService = userService;
 		}
 
@@ -29,7 +27,7 @@ namespace API.Controllers
 		[HttpPut]
 		public async Task<ActionResult<UserDto>> Despoit([FromBody] DepositDto dto)
 		{
-			return Ok(await _userService.GetUsersAsync());
+			return Ok(await _userService.DespoitAsync(dto));
 		}
 	}
 }

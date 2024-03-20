@@ -2,6 +2,8 @@
 using API.Exceptions;
 using API.Models;
 using API.Repositories;
+using API.Repositories.Implementations;
+using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,53 +13,29 @@ namespace API.Controllers
 	[ApiController]
 	public class ApontmentController : ControllerBase
 	{
-		private readonly IApontmentRepository _apontmentRepository;
-		private readonly IMapper _mapper;
-		
-		public ApontmentController(IApontmentRepository apontmentRepository, IMapper mapper)
+		private readonly IApontmentService _apontmentService;
+
+		public ApontmentController(IApontmentService apontmentService)
 		{
-			_apontmentRepository = apontmentRepository;
-			_mapper = mapper;
+			_apontmentService = apontmentService;
 		}
 
 		[HttpGet]
 		public async Task<ActionResult<List<ApontmentDto>>> GetApontment()
 		{
-			List<ApontmentDto> dtos = new List<ApontmentDto>();
-			List<Apontment> apontments = await _apontmentRepository.GetAsync();
-			apontments.ForEach(apontment => dtos.Add(_mapper.Map<ApontmentDto>(apontment)));
-			return Ok(dtos);
+			return Ok(await _apontmentService.GetApontmentAsync());
 		}
 
         [HttpPost]
         public async Task<ActionResult<ApontmentDto>> CreateApontment([FromBody] ApontmentDto dto)
         {
-			Apontment apontment = _mapper.Map<Apontment>(dto);
-			_apontmentRepository.Create(apontment);
-            await _apontmentRepository.SaveChangesAsync();
-            return Ok(dto);
-        }
+			return Ok(await _apontmentService.GetApontmentAsync());
+		}
 
         [HttpDelete("{ApontmentHors}")]
         public async Task<ActionResult> DeleteApontment([FromRoute] int apontmentHors)
         {
-            //Добавить проверку для apontmentHors
-            var apontment = _apontmentRepository.GetByHors(apontmentHors);
-            //Убрать
-			if (apontment == null)
-            {
-				throw new BadRequestException($"Поле не соответствует ожидаению");
-			}
-            _apontmentRepository.Remove(apontment);
-            await _apontmentRepository.SaveChangesAsync();
-            return NoContent();
-        }
+			return Ok(await _apontmentService.DeleteApontmentAsync());
+		}
 	}
 }
-
-//Добавить связь между заявкой и пользователем с пк
-//добавить ксатомные исключеня добавить глобальную обработку исключений 
-// в дто кидаю айди пользователя от его лица
-//Рест апи и следователь сооап
-
-//Дто имя пользователя + мани => ищем в репозитории. Обращаемся к мани += Дто.мани сохранить изменения  Пут запрос на обенавление 

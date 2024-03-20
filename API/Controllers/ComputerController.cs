@@ -11,12 +11,10 @@ namespace API.Controllers
 	[ApiController]
 	public class ComputerController : ControllerBase
 	{
-		private readonly IComputerRepository _computerRepository;
 		private readonly IComputerServise _computerServise;
 
-        public ComputerController(IComputerRepository computerRepository)
+        public ComputerController(IComputerServise computerServise)
         {
-			_computerRepository = computerRepository;
 			_computerServise = computerServise;
 		}
 
@@ -29,7 +27,7 @@ namespace API.Controllers
 		[HttpGet("{number}")]
 		public async Task<ActionResult<ComputerDto>> GetComputerByNumber([FromRoute] string number)
 		{
-			return Ok(await _computerServise.GetComputerByNumberAsync());
+			return Ok(await _computerServise.GetComputerByNumberAsync(number));
 		}
 
 	}
