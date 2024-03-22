@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services.Implementations
 {
-	//Сделать валидатор
 	public class ComputerServiceImpl : IComputerServise
 	{
 		private readonly IComputerValidator _computerValidator;
@@ -32,14 +31,12 @@ namespace API.Services.Implementations
 
 		public async Task<ComputerDto> GetComputerByNumberAsync([FromQuery] string number)
 		{
-			//Вынести в валидатор
 			_computerValidator.ValidatorGetComputerByNumber(number);
 			return _mapper.Map<ComputerDto>(_computerRepository.GetByNumber(number));
 		}
 
 		public async Task<ComputerDto> GetComputerByIdAsync(int id)
 		{
-			//Провалидировать Id
 			_computerValidator.ValidateId(id);
 			return _mapper.Map<ComputerDto>(await _computerRepository.GetByIdAsync(id));
 		}

@@ -6,6 +6,7 @@ namespace API.Validators
 {
 	public interface IComputerValidator : IBaseValidator
 	{
+		//Название переделать
 		void ValidatorGetComputerByNumber(string number);
 	}
 }

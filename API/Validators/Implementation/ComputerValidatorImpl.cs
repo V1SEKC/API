@@ -1,6 +1,4 @@
-﻿using API.Dto;
-using API.Exceptions;
-using Microsoft.AspNetCore.Mvc;
+﻿using API.Exceptions;
 
 namespace API.Validators.Implementation
 {

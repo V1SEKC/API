@@ -10,6 +10,7 @@ namespace API.Validators.Implementation
         {
             if (dto.Money <= 0 || string.IsNullOrWhiteSpace(dto.UserName))
             {
+                // Скажи пользователю, какие данные необходимо прокидывать, например, поле Money должно быть больше 0
                 throw new BadRequestException($"Поле Money или UserName не соответствует ожидаению");
             }
         }

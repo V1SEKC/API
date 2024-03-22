@@ -12,6 +12,7 @@ namespace API.Services.Implementations
 		private readonly IMapper _mapper;
 		private readonly IUserValidator _userValidator;
 
+		//Добавил зависимость, но не инициализируешь в констркторе
 		public UserServiceImpl(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
@@ -35,7 +36,6 @@ namespace API.Services.Implementations
 			return _mapper.Map<UserDto>(user);
 		}
 
-		//Переименовать и изменить возвращаемый тип данных на UserDto
 		public async Task<UserDto> GetUserByIdAsync(int id)
 		{
 			_userValidator.ValidateId(id);

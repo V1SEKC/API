@@ -29,6 +29,7 @@ namespace API
 			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddScoped<IUserService, UserServiceImpl>();
 			builder.Services.AddScoped<IApontmentRepository, ApontmentRepository>();
+			//Ќе вижу инстансов дл€ остальных валидаторов
 			builder.Services.AddScoped<IUserValidator, UserValidatorImpl>();
 			builder.Services.AddControllers();
 

@@ -3,16 +3,13 @@ using API.Exceptions;
 using API.Models;
 using API.Repositories;
 using API.Validators;
-using API.Validators.Base;
 using AutoMapper;
 using ConsoleApp1.Repositories;
 
 namespace API.Services.Implementations
 {
-	//Сделать валидатор
 	public class ApontmentServiceImpl : IApontmentService
 	{
-		// добавить два репозитория
 		private readonly IApontmentValidator _apontmentValidator;
 		private readonly IComputerRepository _computerRepository;
 		private readonly IUserRepository _userRepository;
@@ -36,11 +33,9 @@ namespace API.Services.Implementations
 			return dtos;
 		}
 
-		//Решить проблему NotFound для компьютера и пользователя
 		public async Task<ApontmentDto> CreateApontmentAsync(ApontmentDto dto)
 		{
-			//Перевести на GetById
-			// Я забыл что означает это 
+			// Почему не вынес этот if в валидатор?
 			if (dto.UserId < 0 | dto.ComputerId < 0)
 			{
 				throw new NotFoundException($"Поле Money или UserName не соответствует ожидаению");
@@ -53,18 +48,15 @@ namespace API.Services.Implementations
 			{
 				throw new BadRequestException($"На балансе не достаточно средств");
 			}
-			//Уменьшить баланс пользователя на Price
 			user.Monny = user.Monny - price;
 			_apontmentRepository.Create(_mapper.Map<Apontment>(dto));
 			await _apontmentRepository.SaveChangesAsync();
-			//Вызвать метод сохранения у репозитория пользователей
 			await _userRepository.SaveChangesAsync();
 			return dto;
 		}
 		
 		public async Task DeleteApontmentAsync(int apontmentHors)
 		{
-			// Вынести в валидатор
 			_apontmentValidator.ValidatorDeleteApontment(apontmentHors);
             var apontment = _apontmentRepository.GetByHors(apontmentHors);
 			_apontmentRepository.Remove(apontment);
