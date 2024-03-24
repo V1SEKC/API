@@ -36,18 +36,12 @@ namespace API.Services.Implementations
 		public async Task<ApontmentDto> CreateApontmentAsync(ApontmentDto dto)
 		{
 			// Почему не вынес этот if в валидатор?
-			if (dto.UserId < 0 | dto.ComputerId < 0)
-			{
-				throw new NotFoundException($"Поле Money или UserName не соответствует ожидаению");
-			}
+			_apontmentValidator.ValidatorCreateApontmentTWO(dto);
 			User user = await _userRepository.GetByIdAsync(dto.UserId);
 			Computer computer = await _computerRepository.GetByIdAsync(dto.ComputerId);
 			int price = computer.PricePerHour * dto.Hors;
 			//вынести в валидатор
-			if (price > user.Monny)
-			{
-				throw new BadRequestException($"На балансе не достаточно средств");
-			}
+			_apontmentValidator.ValidatorCreateApontment(dto,price,user.Monny);
 			user.Monny = user.Monny - price;
 			_apontmentRepository.Create(_mapper.Map<Apontment>(dto));
 			await _apontmentRepository.SaveChangesAsync();

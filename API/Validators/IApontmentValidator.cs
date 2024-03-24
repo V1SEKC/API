@@ -1,4 +1,6 @@
-﻿using API.Validators.Base;
+﻿using API.Dto;
+using API.Models;
+using API.Validators.Base;
 
 namespace API.Validators
 {
@@ -6,5 +8,7 @@ namespace API.Validators
 	{
 		//Переделать название
 		void ValidatorDeleteApontment(int apontmentHors);
+		void ValidatorCreateApontment(ApontmentDto dto);
+		void ValidatorCreateApontmentTWO(ApontmentDto dto);
 	}
 }

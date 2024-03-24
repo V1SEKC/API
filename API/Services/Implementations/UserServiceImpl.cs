@@ -13,11 +13,12 @@ namespace API.Services.Implementations
 		private readonly IUserValidator _userValidator;
 
 		//Добавил зависимость, но не инициализируешь в констркторе
-		public UserServiceImpl(IUserRepository userRepository, IMapper mapper)
+		public UserServiceImpl(IUserRepository userRepository, IMapper mapper, IUserValidator userValidator)
         {
             _userRepository = userRepository;
 			_mapper = mapper;
-        }
+			_userValidator = userValidator;
+		}
 
 		public async Task<List<UserDto>> GetUsersAsync()
         {

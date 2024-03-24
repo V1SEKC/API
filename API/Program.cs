@@ -31,6 +31,8 @@ namespace API
 			builder.Services.AddScoped<IApontmentRepository, ApontmentRepository>();
 			//Не вижу инстансов для остальных валидаторов
 			builder.Services.AddScoped<IUserValidator, UserValidatorImpl>();
+			builder.Services.AddScoped<IComputerValidator, ComputerValidatorImpl>();
+			builder.Services.AddScoped<IApontmentValidator, ApontmentValidatorImpl>();
 			builder.Services.AddControllers();
 
 			//Регистрируем хендлеры
