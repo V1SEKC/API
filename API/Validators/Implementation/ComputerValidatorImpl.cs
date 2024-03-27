@@ -1,15 +1,16 @@
 ﻿using API.Exceptions;
+using API.Validators.Base;
 
 namespace API.Validators.Implementation
 {
-	public class ComputerValidator
+	public class ComputerValidatorImpl : BaseValidator, IComputerValidator
 	{
-		public void GetComputerByNumberAsync(string number)
+		public void ValidateComputerNumber(string number)
 		{
 			if (string.IsNullOrWhiteSpace(number))
 			{
 				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
 			}
 		}
-	}
+    }
 }

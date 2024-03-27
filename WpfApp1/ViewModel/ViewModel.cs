@@ -44,20 +44,11 @@ namespace WpfApp1.ViewModel
 		private async void LoadData()
 		{
 			var response = await httpClient.GetAsync("https://localhost:7041/api/Computer");
-			if (!response.IsSuccessStatusCode) //Если не усешно
+			if (!response.IsSuccessStatusCode)
 				return;
-			string body = await response.Content.ReadAsStringAsync(); //Считали контенкт как строку
+			string body = await response.Content.ReadAsStringAsync();
 
 			Computers = new ObservableCollection<Computer>(JsonConvert.DeserializeObject<List<Computer>>(body));
-
-			
-
-			//Сущность User, Apontment-запись соединяет таблицу юзер и таблицу пк есть время начала и время конца, Многие ко многим.
-			// В контролере будет пост метод, который отвечает за создание записи, новый контролер. Еще раз миграции 
-			// Еще один репозиторий для зависимости 
-
-
-
 		}
 	}
 }

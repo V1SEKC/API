@@ -1,5 +1,4 @@
 ﻿using API.Dto;
-using API.Exceptions;
 using API.Models;
 using API.Repositories;
 using API.Validators;
@@ -11,19 +10,22 @@ namespace API.Services.Implementations
 	public class ApontmentServiceImpl : IApontmentService
 	{
 		private readonly IApontmentValidator _apontmentValidator;
+		private readonly IUserValidator _userValidator;
 		private readonly IComputerRepository _computerRepository;
 		private readonly IUserRepository _userRepository;
 		private readonly IApontmentRepository _apontmentRepository;
 		private readonly IMapper _mapper;
 
 		public ApontmentServiceImpl(IApontmentRepository apontmentRepository, IMapper mapper, 
-			IUserRepository userRepository, IComputerRepository computerRepository, IApontmentValidator apontmentvalidator)
+			IUserRepository userRepository, IComputerRepository computerRepository, IApontmentValidator apontmentvalidator,
+            IUserValidator userValidator)
 		{
 			_apontmentRepository = apontmentRepository;
 			_mapper = mapper;
 			_userRepository = userRepository;
 			_computerRepository = computerRepository;
 			_apontmentValidator = apontmentvalidator;
+			_userValidator = userValidator;
 		}
 		public async Task<List<ApontmentDto>> GetApontmentAsync()
 		{
@@ -35,14 +37,12 @@ namespace API.Services.Implementations
 
 		public async Task<ApontmentDto> CreateApontmentAsync(ApontmentDto dto)
 		{
-			// Почему не вынес этот if в валидатор?
-			_apontmentValidator.ValidatorCreateApontmentTWO(dto);
+			_apontmentValidator.ValidateApontmentDto(dto);
 			User user = await _userRepository.GetByIdAsync(dto.UserId);
 			Computer computer = await _computerRepository.GetByIdAsync(dto.ComputerId);
 			int price = computer.PricePerHour * dto.Hors;
-			//вынести в валидатор
-			_apontmentValidator.ValidatorCreateApontment(dto,price,user.Monny);
-			user.Monny = user.Monny - price;
+			_userValidator.ValidateBalance(price,user.Monny);
+			user.Monny -= price;
 			_apontmentRepository.Create(_mapper.Map<Apontment>(dto));
 			await _apontmentRepository.SaveChangesAsync();
 			await _userRepository.SaveChangesAsync();
@@ -51,7 +51,7 @@ namespace API.Services.Implementations
 		
 		public async Task DeleteApontmentAsync(int apontmentHors)
 		{
-			_apontmentValidator.ValidatorDeleteApontment(apontmentHors);
+			_apontmentValidator.ValidateApontmentHors(apontmentHors);
             var apontment = _apontmentRepository.GetByHors(apontmentHors);
 			_apontmentRepository.Remove(apontment);
 			await _apontmentRepository.SaveChangesAsync();

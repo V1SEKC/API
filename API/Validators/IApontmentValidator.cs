@@ -1,14 +1,12 @@
 ﻿using API.Dto;
-using API.Models;
 using API.Validators.Base;
 
 namespace API.Validators
 {
 	public interface IApontmentValidator : IBaseValidator
 	{
-		//Переделать название
-		void ValidatorDeleteApontment(int apontmentHors);
-		void ValidatorCreateApontment(ApontmentDto dto);
-		void ValidatorCreateApontmentTWO(ApontmentDto dto);
+		void ValidateApontmentHors(int apontmentHors);
+		void ValidateApontmentDto(ApontmentDto dto);
+		void CreateApontmentTWO(ApontmentDto dto);
 	}
 }

@@ -1,23 +1,25 @@
 ﻿using API.Dto;
 using API.Exceptions;
-using API.Models;
+using API.Validators.Base;
 
 namespace API.Validators.Implementation
 {
-	public class ApontmentValidatorImpl
+	public class ApontmentValidatorImpl : BaseValidator, IApontmentValidator
 	{
-		public void DeleteApontment(int apontmentHors)
+		public void ValidateApontmentHors(int apontmentHors)
 		{
-			if (apontmentHors <= 0)
+			if (apontmentHors > 0)
 			{
+				//Привести сообщение к более понятному виду
 				throw new BadRequestException($"Поле не соответствует ожидаению");
 			}
 		}
-		public void CreateApontment(ApontmentDto dto)
+		public void ValidateApontmentDto(ApontmentDto dto)
 		{
-			if (price > user.Monny)
+			if (dto.Hors > 0 && dto.Ending < DateTime.Now)
 			{
-				throw new BadRequestException($"На балансе не достаточно средств");
+                //Привести сообщение к более понятному виду
+                throw new BadRequestException($"На балансе не достаточно средств");
 			}
 		}
 

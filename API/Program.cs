@@ -9,7 +9,6 @@ using API.Validators.Implementation;
 using ConsoleApp1.Repositories;
 using ConsoleApp1.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace API
 {

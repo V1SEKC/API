@@ -1,12 +1,9 @@
-﻿using API.Dto;
-using API.Validators.Base;
-using Microsoft.AspNetCore.Mvc;
+﻿using API.Validators.Base;
 
 namespace API.Validators
 {
 	public interface IComputerValidator : IBaseValidator
 	{
-		//Название переделать
-		void ValidatorGetComputerByNumber(string number);
+		void ValidateComputerNumber(string number);
 	}
 }
