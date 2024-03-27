@@ -31,7 +31,7 @@ namespace API.Services.Implementations
 
 		public async Task<ComputerDto> GetComputerByNumberAsync([FromQuery] string number)
 		{
-			_computerValidator.ValidatorGetComputerByNumber(number);
+			_computerValidator.ValidateComputerNumber(number);
 			return _mapper.Map<ComputerDto>(_computerRepository.GetByNumber(number));
 		}
 
