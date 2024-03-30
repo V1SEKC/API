@@ -71,17 +71,21 @@ namespace API
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-			app.MapIdentityApi<IdentityUser>();
+            app.MapIdentityApi<IdentityUser>();
 
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
 
-
 			app.MapControllers();
-			app.UseExceptionHandler("/error");
-			app.Run();
+            app.UseExceptionHandler(new ExceptionHandlerOptions()
+            {
+                AllowStatusCode404Response = true,
+                ExceptionHandlingPath = "/error"
+            });
+            app.Run();
 		}
 	}
 }

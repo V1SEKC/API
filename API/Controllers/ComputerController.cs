@@ -1,9 +1,5 @@
 ﻿using API.Dto;
-using API.Exceptions;
-using API.Models;
 using API.Services;
-using ConsoleApp1.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,7 +16,6 @@ namespace API.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		public async Task<ActionResult<List<ComputerDto>>> GetComputers()
 		{
 			return Ok(await _computerServise.GetComputersAsync());

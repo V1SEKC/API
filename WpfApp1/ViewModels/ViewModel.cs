@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
 using Newtonsoft.Json;
 using WpfApp1.Models;
 using System.Collections.ObjectModel;
@@ -7,18 +6,17 @@ using System.Windows.Input;
 using WpfApp1.Commands;
 using WpfApp1.Infrastructure;
 
-namespace WpfApp1.ViewModel
+namespace WpfApp1.ViewModels
 {
 	public class ViewModel : NotifyPropertyChangedObject
 	{
 		private ObservableCollection<Computer> _computers;
-
-		private HttpClient httpClient = new HttpClient();
+		private readonly ApiConnection apiConnection;
 
         public ViewModel()
         {
+			apiConnection = ApiConnection.GetApiConnection;
 			RefreshCommand = new LambdaCommand(OnRefreshCommandExecuted, CanRefreshCommandExecute);
-			
 			LoadData();
         }
 
@@ -43,11 +41,10 @@ namespace WpfApp1.ViewModel
 
 		private async void LoadData()
 		{
-			var response = await httpClient.GetAsync("https://localhost:7041/api/Computer");
+			var response = await apiConnection.HttpClient.GetAsync("/api/Computer");
 			if (!response.IsSuccessStatusCode)
 				return;
 			string body = await response.Content.ReadAsStringAsync();
-
 			Computers = new ObservableCollection<Computer>(JsonConvert.DeserializeObject<List<Computer>>(body));
 		}
 	}
