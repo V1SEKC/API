@@ -11,7 +11,7 @@ namespace API.Validators.Implementation
             if (price > monny)
             {
                 //Добавить сообщение
-                throw new BadRequestException($"");
+                throw new BadRequestException($"Вам не хватает {monny}, чтобы купить часы");
             }
         }
 
