@@ -8,27 +8,19 @@ namespace API.Validators.Implementation
 	{
 		public void ValidateApontmentHors(int apontmentHors)
 		{
-			if (apontmentHors > 0)
+			if (apontmentHors < 0)
 			{
 				//Привести сообщение к более понятному виду
-				throw new BadRequestException($"Поле не соответствует ожидаению");
+				throw new BadRequestException($"Поле {apontmentHors} меньше 0, добавте больше часов");
 			}
 		}
 		public void ValidateApontmentDto(ApontmentDto dto)
 		{
-			if (dto.Hors > 0 && dto.Ending < DateTime.Now)
+			if (dto.Hors < 0 && dto.Ending < DateTime.Now)
 			{
                 //Привести сообщение к более понятному виду
-                throw new BadRequestException($"На балансе не достаточно средств");
+                throw new BadRequestException($"Поле {dto.Hors} меньше 0, либо же ваше время окончания настенет раньше текущего");
 			}
-		}
-
-		public void CreateApontmentTWO(ApontmentDto dto)
-		{
-			if (dto.UserId < 0 | dto.ComputerId < 0)
-			{
-				throw new NotFoundException($"Поле UserId и ComputerId не соответствует ожидаению");
-			}	
 		}
 	}
 }

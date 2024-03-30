@@ -12,5 +12,10 @@ namespace API.Validators.Implementation
 				throw new BadRequestException($"Поле {number} не соответствует ожидаению");
 			}
 		}
-    }
+
+		public void ValidatorGetComputerByNumber(string number)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

@@ -7,6 +7,5 @@ namespace API.Validators
 	{
 		void ValidateApontmentHors(int apontmentHors);
 		void ValidateApontmentDto(ApontmentDto dto);
-		void CreateApontmentTWO(ApontmentDto dto);
 	}
 }
