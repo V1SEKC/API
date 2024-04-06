@@ -25,7 +25,10 @@
             <ColumnDefinition Width="0.1*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0" x:Name="ComputersListBox" ItemsSource="{Binding Computers}">
+        <ListBox Grid.Row="0" 
+                 Grid.Column="0" 
+                 x:Name="ComputersListBox"
+                 ItemsSource="{Binding Computers}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
