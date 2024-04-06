@@ -15,23 +15,88 @@
 
     <Grid>
 
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Text="Введите маил"
+        Width="300" 
+        Height="100" 
+        Background="AliceBlue"
+        Foreground="HotPink"
+        FontSize="20"
+        Grid.Column="1" Grid.Row="0"/>
+
         <TextBox Text="{Binding LoginRequest.Email}"
                  Width="300" 
                  Height="100" 
+                 Grid.Column="1" Grid.Row="1"
                  FontSize="14"
                  HorizontalAlignment="Center" 
                  VerticalAlignment="Top"/>
 
+        <TextBox Text="Введите пароль"
+        Width="300" 
+        Height="100" 
+        Background="AliceBlue"
+        Foreground="HotPink"
+        FontSize="20"
+        Grid.Column="1" Grid.Row="2"/>
+        
         <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"
                      Width="300" 
                      Height="100" 
                      FontSize="14" 
+                     Grid.Column="1" Grid.Row="3"
                      HorizontalAlignment="Center" 
                      VerticalAlignment="Center"/>
 
-        <Button Content="Войти"
+
+        <Button Content="Войти" Width="250" Height="50" FontSize="20" Grid.Column="1" Grid.Row="6" Foreground="HotPink"  Command="{Binding SignInCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <!-- Стиль кнопки -->
+                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="BorderBrush" Value="#BBB"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Padding" Value="8,4,8,4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- Триггер для изменения стиля при наведении курсора -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                        <Setter Property="BorderBrush" Value="#AAA"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
+
+        <!--<Button Content="Войти"
+                Background="Aqua"
+                Foreground="HotPink"
                 Command="{Binding SignInCommand}"
-                Width="300" Height="100" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                Grid.Column="1" Grid.Row="6"
+                HorizontalAlignment="Center"
+                Width="300" Height="50" FontSize="20"/>-->
 
     </Grid>
 </Page>

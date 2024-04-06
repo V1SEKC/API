@@ -19,9 +19,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        
-        
+
         <TextBox Text="{Binding LoginRequest.Email}"
                  Grid.Row="0"
                  FontSize="14"
@@ -40,21 +38,94 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
-            <Button Content="Войти"
+
+
+
+            <Button Content="Нет аккаунта? Зарегистрироваться" Width="250" Height="50" FontSize="20" Grid.Column="1" Grid.Row="6" Foreground="HotPink"  Command="{Binding SignInCommand}"/>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <!-- Стиль кнопки -->
+                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="BorderBrush" Value="#BBB"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Padding" Value="8,4,8,4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- Триггер для изменения стиля при наведении курсора -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                        <Setter Property="BorderBrush" Value="#AAA"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            </Button>
+
+
+
+
+
+            <!--<Button Content="Войти"
+                    Background="Aqua"
+                    Foreground="HotPink"
                     Grid.Column="0"
                     Command="{Binding SignInCommand}"
                     Width="300" Height="100" 
-                    FontSize="14" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Bottom"/>
+                    FontSize="20" 
+                    HorizontalAlignment="Center"/>-->
 
-            <Button Content="Нет аккаунта? Зарегистрироваться"
-                    Background="White"
+
+
+            <Button Content="Нет аккаунта? Зарегистрироваться" Width="250" Height="50" FontSize="20" Grid.Column="1" Grid.Row="6" Foreground="HotPink"  Command="{Binding GoToSignUpPageCommand}"/>
+            <Button.Style>
+                    <Style TargetType="Button">
+                        <!-- Стиль кнопки -->
+                        <Setter Property="Background" Value="AliceBlue"/>
+                        <Setter Property="BorderBrush" Value="#BBB"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Padding" Value="8,4,8,4"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <!-- Триггер для изменения стиля при наведении курсора -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Aqua"/>
+                                            <Setter Property="BorderBrush" Value="#AAA"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
+
+
+
+
+            <!--<Button Content="Нет аккаунта? Зарегистрироваться"
+                    Background="Aqua"
+                    Foreground="HotPink"
                     Grid.Column="1"
                     Command="{Binding GoToSignUpPageCommand}"
-                    FontSize="14"
-                    BorderThickness="0"/>
+                    Width="300" Height="100" 
+                    FontSize="20"
+                    HorizontalAlignment="Center" 
+                    BorderThickness="0"/>-->
         </Grid>
     </Grid>
 </Page>
