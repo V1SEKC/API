@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WpfApp1.Commands;
 using WpfApp1.Infrastructure;
+using WpfApp1.Types;
 
 namespace WpfApp1.ViewModels
 {
@@ -17,6 +18,7 @@ namespace WpfApp1.ViewModels
         {
 			apiConnection = ApiConnection.GetApiConnection;
 			RefreshCommand = new LambdaCommand(OnRefreshCommandExecuted, CanRefreshCommandExecute);
+			ExitCommand = new LambdaCommand(OnExitCommandExecuted, CanExitCommandExecute);
 			LoadData();
         }
 
@@ -26,6 +28,19 @@ namespace WpfApp1.ViewModels
 			set { Set(ref _computers, value); } 
 		}
 
+		public ICommand ExitCommand { get; set; }
+
+		public bool CanExitCommandExecute(object parametr)
+		{
+			return true;
+		}
+
+		public void OnExitCommandExecuted(object parameter)
+		{
+			apiConnection.HttpClient.DefaultRequestHeaders.Remove("Authorization");
+			apiConnection.RefreshToken = string.Empty;
+			MainWindowNavigationViewModel.SwitchPage(MainPageType.SignInPage);
+		}
 
 		public ICommand RefreshCommand { get; set; }
 

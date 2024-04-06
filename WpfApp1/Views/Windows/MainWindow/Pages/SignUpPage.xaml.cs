@@ -16,7 +16,7 @@ namespace WpfApp1.Views.Windows.MainWindow.Pages
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            (DataContext as SignInViewModel).LoginRequest.Password = (sender as PasswordBox).Password;
+            (DataContext as SignUpViewModel).LoginRequest.Password = (sender as PasswordBox).Password;
         }
     }
 }

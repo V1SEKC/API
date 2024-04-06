@@ -16,12 +16,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.8*">
-
             </RowDefinition>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" x:Name="ComputersListBox" ItemsSource="{Binding Computers}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Row="0" Grid.Column="0" x:Name="ComputersListBox" ItemsSource="{Binding Computers}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -50,7 +54,26 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Grid.Row="1" Width="130" Command="{Binding RefreshCommand}" Content="Обновить" HorizontalAlignment="Center"  />
+        <Button Grid.Row="1"
+                Grid.Column="0"
+                Width="130" 
+                Command="{Binding RefreshCommand}" 
+                Content="Обновить" 
+                HorizontalAlignment="Center"/>
+
+        <Button Grid.Column="1"
+                Command="{Binding ExitCommand}"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                BorderThickness="0"
+                VerticalAlignment="Top"
+                MaxHeight="50"
+                MaxWidth="50"
+                Grid.Row="0">
+            <Button.Content>
+                <Image Source="vyhod.png"/>
+            </Button.Content>
+        </Button>
 
     </Grid>
 </Page>

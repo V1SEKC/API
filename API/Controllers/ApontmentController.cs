@@ -24,7 +24,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ApontmentDto>> CreateApontment([FromBody] ApontmentDto dto)
         {
-			return Ok(await _apontmentService.GetApontmentAsync());
+			return Ok(await _apontmentService.CreateApontmentAsync(dto));
 		}
 
         [HttpDelete("{ApontmentHors}")]
