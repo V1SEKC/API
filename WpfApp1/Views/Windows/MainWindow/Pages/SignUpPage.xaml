@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1.Views.Windows.MainWindow.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800" Background="Aqua"
       Title="SignUpPage">
 
     <Page.DataContext>
@@ -15,58 +15,50 @@
 
     <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+
+        <Label Content="Зарегестрируйтесь" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Top" 
+               Margin="0,20,0,0" 
+               FontSize="18"/>
+
+        <Label Content="Введите ваш email" 
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Top" 
+               Margin="50,80,0,0"/>
         
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <TextBox 
+            Text="{Binding LoginRequest.Email}"
+            x:Name="Email" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Margin="170,85,0,0" 
+            Width="200"/>
 
-        <StackPanel Grid.ColumnSpan="2"
-                    Grid.Row="0"
-                    HorizontalAlignment="Center">
-            
-            <TextBlock Text="Логин"
-                       Margin="0,5"
-                       FontSize="15"/>
+        <Label Content="Введите пароль" 
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Top" 
+               Margin="50,120,0,0"/>
+        
+        <PasswordBox x:Name="Password" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" 
+                     Margin="170,125,0,0" 
+                     Width="200"/>
 
-            <TextBox Text="{Binding LoginRequest.Email}"
-                     Width="300" 
-                     Height="100" 
-                     Background="AliceBlue"
-                     Foreground="HotPink"
-                     FontSize="20"/>
-        </StackPanel>
-
-        <StackPanel Grid.ColumnSpan="2" 
-                    Grid.Row="1"
-                    HorizontalAlignment="Center">
-            
-            <TextBlock Text="Пароль"
-                       Margin="0,5"
-                       FontSize="15"/>
-
-            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"
-                         Width="300" 
-                         Height="100" 
-                         FontSize="14" 
-                         HorizontalAlignment="Center" 
-                         VerticalAlignment="Center"/>
-        </StackPanel>
-
-        <Button Content="Зарегистрироваться и войти"
-                Grid.Column="0"
-                Grid.Row="2" 
+        <Button Content="Войти" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Margin="-550,180,0,0" 
+                Width="130" 
                 Command="{Binding SignUpCommand}"
                 Style="{StaticResource BaseButton}"/>
 
-        <Button Content="Уже есть аккаунт? Войти"
-                Grid.Column="1"
-                Grid.Row="2" 
+        <Button Content="Зарегестрируйтесь" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Margin="-100,180,0,0" 
+                Width="200"
                 Command="{Binding GoToSignInPageCommand}"
                 Style="{StaticResource BaseButton}"/>
     </Grid>

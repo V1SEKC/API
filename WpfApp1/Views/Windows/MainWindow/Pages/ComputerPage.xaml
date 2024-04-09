@@ -45,13 +45,13 @@
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Grid.Row="0">Номер стола</TextBlock>
-                        <TextBlock Grid.Column="1" Grid.Row="0">Статус стола</TextBlock>
-                        <TextBlock Grid.Column="2" Grid.Row="0">Цена за час</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="2">Номер стола</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Margin="2">Статус стола</TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="2">Цена за час</TextBlock>
 
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Number}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding IsFree}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding PricePerHour}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="2" Text="{Binding Number}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding IsFree}"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" Margin="2" Text="{Binding PricePerHour}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
