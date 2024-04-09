@@ -1,5 +1,6 @@
 using API.Data;
 using API.Handler;
+using API.Models;
 using API.Repositories;
 using API.Repositories.Implementations;
 using API.Services;
@@ -27,7 +28,6 @@ namespace API
 
 			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			builder.Services.AddScoped<IComputerRepository, ComputerRepository>();
-			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddScoped<IUserService, UserServiceImpl>();
 			builder.Services.AddScoped<IApontmentRepository, ApontmentRepository>();
 			builder.Services.AddScoped<IComputerServise, ComputerServiceImpl>();
@@ -37,7 +37,8 @@ namespace API
 			builder.Services.AddScoped<IApontmentValidator, ApontmentValidatorImpl>();
 
 			builder.Services.AddAuthorization();
-			builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+
+			builder.Services.AddIdentityApiEndpoints<User>()
 				.AddEntityFrameworkStores<AppDbContext>();
 
 			builder.Services.AddControllers();

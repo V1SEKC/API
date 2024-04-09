@@ -1,8 +1,9 @@
 ﻿using API.Models.Base;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Models
 {
-	public class User : BaseModel
+	public class User : IdentityUser<int>
 	{ 
 		public int Monny {  get; set; }
 		public string Name { get; set; }

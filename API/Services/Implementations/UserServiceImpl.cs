@@ -1,21 +1,24 @@
 ﻿using API.Dto;
+using API.Exceptions;
 using API.Models;
 using API.Repositories;
 using API.Validators;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Services.Implementations
 {
     public class UserServiceImpl : IUserService
 	{
-        private readonly IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 		private readonly IUserValidator _userValidator;
 
 		//Добавил зависимость, но не инициализируешь в констркторе
-		public UserServiceImpl(IUserRepository userRepository, IMapper mapper, IUserValidator userValidator)
+		public UserServiceImpl(UserManager<User> userManager, IMapper mapper, IUserValidator userValidator)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
 			_mapper = mapper;
 			_userValidator = userValidator;
 		}
@@ -23,7 +26,7 @@ namespace API.Services.Implementations
 		public async Task<List<UserDto>> GetUsersAsync()
         {
             List<UserDto> dtos = new List<UserDto>();
-            List<User> users = await _userRepository.GetAsync();
+            List<User> users = await _userManager.Users.ToListAsync();
 			users.ForEach(user => dtos.Add(_mapper.Map<UserDto>(users)));
             return dtos;
         }
@@ -31,16 +34,17 @@ namespace API.Services.Implementations
 		public async Task<UserDto> DespoitAsync(DepositDto dto)
 		{
 			_userValidator.ValidateDeposit(dto);
-			User user = _userRepository.GetByName(dto.UserName);
+			User user = await _userManager.FindByNameAsync(dto.UserName) 
+				?? throw new NotFoundException($"Нет пользователя с именем {dto.UserName}");
 			user.Monny += dto.Money;
-			await _userRepository.UpdateAsync(user);
+			await _userManager.UpdateAsync(user);
 			return _mapper.Map<UserDto>(user);
 		}
 
 		public async Task<UserDto> GetUserByIdAsync(int id)
 		{
 			_userValidator.ValidateId(id);
-			return _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(id));
+			return _mapper.Map<UserDto>(await _userManager.FindByIdAsync(id.ToString()));
 		}
 	}
 }
